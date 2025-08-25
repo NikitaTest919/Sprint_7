@@ -14,9 +14,12 @@ class TestOrdersList:
         assert response.status_code == 200
         assert isinstance(response.json()["orders"], list)
         
-        # Проверяем структуру первого заказа, если список не пустой
-        if response.json()["orders"]:
-            order = response.json()["orders"][0]
-            assert "id" in order
-            assert "track" in order
-            assert "firstName" in order
+        # Проверяем, что список заказов не пустой
+        orders = response.json()["orders"]
+        assert len(orders) > 0, "Список заказов пуст, тест не может быть выполнен"
+
+        # Проверяем структуру первого заказа
+        order = orders[0]
+        assert "id" in order, "Отсутствует поле 'id' в заказе"
+        assert "track" in order, "Отсутствует поле 'track' в заказе"
+        assert "firstName" in order, "Отсутствует поле 'firstName' в заказе"
