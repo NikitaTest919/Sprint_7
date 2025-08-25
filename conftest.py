@@ -2,8 +2,7 @@ import pytest
 import requests
 import random
 import string
-
-BASE_URL = "https://qa-scooter.praktikum-services.ru/api/v1"
+from utils.helpers import BASE_URL
 
 def generate_random_string(length):
     """Генерирует случайную строку из букв нижнего регистра"""

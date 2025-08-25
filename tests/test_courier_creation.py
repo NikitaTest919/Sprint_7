@@ -7,7 +7,7 @@ from utils.helpers import BASE_URL
 class TestCourierCreation:
     
     @allure.title("Успешное создание курьера")
-    def test_create_courier_success(self, random_courier_data):
+    def test_create_courier_success(self, random_courier_data, setup_courier):
         """Проверка успешного создания курьера"""
         payload = random_courier_data
         
@@ -15,13 +15,7 @@ class TestCourierCreation:
         
         assert response.status_code == 201
         assert response.json()["ok"] == True
-        
-        # Очистка
-        login_response = requests.post(f"{BASE_URL}/courier/login", 
-                                     json={"login": payload["login"], "password": payload["password"]})
-        if login_response.status_code == 200:
-            courier_id = login_response.json()["id"]
-            requests.delete(f"{BASE_URL}/courier/{courier_id}")
+    
     
     @allure.title("Создание курьера без обязательного поля")
     @pytest.mark.parametrize("missing_field", ["login", "password", "firstName"])
